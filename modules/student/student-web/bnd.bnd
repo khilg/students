@@ -1,0 +1,40 @@
+Bundle-Name: student-web
+Bundle-SymbolicName: com.docs.assignment.web
+Bundle-Version: 1.0.0
+Export-Package: com.docs.assignment.web.constants
+Include-Resource:\
+ @poi-4.0.1.jar,\
+ @poi-ooxml-4.0.1.jar,\
+ @poi-ooxml-schemas-4.0.1.jar,\
+ @itext-2.1.7.jar
+
+
+Import-Package: \
+!com.graphbuilder.*,\
+!org.apache.poi.xssf.*,\
+!com.github.luben.zstd.*,\
+!com.microsoft.*,\
+!com.sun.javadoc.*,\
+!com.sun.tools.*,\
+!net.sf.saxon.*,\
+!org.apache.batik.*,\
+!org.apache.jcp.xml.dsig.internal.dom.*,\
+!org.bouncycastle.*,\
+!org.brotli.dec.*,\
+!org.etsi.uri.*,\
+!org.openxmlformats.schemas.*,\
+!org.tukaani.xz.*,\
+!org.apache.poi.hdgf.extractor,\
+!org.apache.poi.hpbf.extractor,\
+!org.apache.poi.hslf.extractor,\
+!org.apache.poi.hslf.*,\
+!org.apache.poi.hsmf.*,\
+!org.apache.poi.hwpf.*,\
+!org.apache.poi.hwpf.extractor,\
+!org.apache.commons.codec.*,\
+!org.apache.commons.collections4.*,\
+!org.apache.commons.compress.*,\
+!org.apache.commons.math3.*,\
+!org.apache.xmlbeans.*,\
+\
+*

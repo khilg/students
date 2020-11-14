@@ -1,0 +1,4 @@
+Bundle-Name: guided-selector
+Bundle-SymbolicName: com.guided.selector
+Bundle-Version: 1.0.0
+Export-Package: com.guided.selector.constants

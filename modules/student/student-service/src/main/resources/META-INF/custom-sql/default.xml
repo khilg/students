@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+    <sql id="com.docs.assignment.student.service.persistence.StudentFinder.findByUsernameEmail">
+        <![CDATA[
+            SELECT * FROM student_student as student
+            WHERE
+                (student.userName = ?) AND
+                (student.email = ?) 
+        ]]>
+    </sql>
+    <sql id="com.docs.assignment.student.service.persistence.StudentFinder.findByName">
+        <![CDATA[
+            SELECT * FROM student_student as student
+            WHERE
+                student.name LIKE ?
+        ]]>
+    </sql>
+
+</custom-sql>
+
+ 

@@ -1,0 +1,4 @@
+Bundle-Name: login-web-ext-custom
+Bundle-SymbolicName: login.web.ext.custom
+Bundle-Version: 1.0.0
+Export-Package: login.web.ext.custom.constants

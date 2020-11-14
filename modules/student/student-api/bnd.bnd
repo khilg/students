@@ -1,0 +1,10 @@
+Bundle-Name: student-api
+Bundle-SymbolicName: com.docs.assignment.student.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.docs.assignment.student.exception,\
+	com.docs.assignment.student.model,\
+	com.docs.assignment.student.service,\
+	com.docs.assignment.student.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../student-service/service.xml
