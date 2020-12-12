@@ -15,6 +15,7 @@
 package com.docs.assignment.student.service.impl;
 
 import com.docs.assignment.student.model.Events;
+import com.docs.assignment.student.model.Student;
 import com.docs.assignment.student.service.base.EventsLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -92,6 +93,15 @@ public class EventsLocalServiceImpl extends EventsLocalServiceBaseImpl {
 		
 	}
 	
+public Events deleteEvent(long id) throws PortalException {
+		
+		Events event = eventsPersistence.findByPrimaryKey(id);
+		
+		eventsPersistence.remove(event);
+		
+		return event;
+	}
+
 	public List<Events> getEventsByGroupId(long groupId){
 			
 			return eventsPersistence.findByGroupId(groupId);

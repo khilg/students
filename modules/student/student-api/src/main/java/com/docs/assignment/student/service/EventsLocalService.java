@@ -87,6 +87,8 @@ public interface EventsLocalService
 	@Transactional(enabled = false)
 	public Events createEvents(long eventId);
 
+	public Events deleteEvent(long id) throws PortalException;
+
 	/**
 	 * Deletes the events from the database. Also notifies the appropriate model listeners.
 	 *

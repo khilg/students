@@ -18,5 +18,9 @@ public class StudentPortletKeys {
 			"com_docs_assignment_web_EventsPortlet";
 		
 	public static final String RESOURCE_NAME = "com.docs.assignment.web.StudentPortlet";
+	
+	public static final String CATEGOTY_KEY = "schedule-support";
+	public static final String CATEGOTY_SECTION = "other";	
+	public static final String CATEGORY_ICON = "forms";
 
 }

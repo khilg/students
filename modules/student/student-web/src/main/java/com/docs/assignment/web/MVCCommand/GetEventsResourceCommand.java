@@ -42,11 +42,12 @@ public class GetEventsResourceCommand implements MVCResourceCommand{
 			 PrintWriter writer = null;
 			 JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 			 
-			 List<Events> eventsList = _eventLocalService.getEventsByGroupId(20124);
-			// List<Events> eventsList = _eventLocalService.getAllEvents();
+			 //List<Events> eventsList = _eventLocalService.getEventsByGroupId(20124);
+			 List<Events> eventsList = _eventLocalService.getAllEvents();
 			 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			 for(Events e : eventsList) {
 				 JSONObject jsonObject  = JSONFactoryUtil.createJSONObject();
+				 jsonObject.put("id", e.getEventId());
 				 jsonObject.put("title", e.getEventName());
 				 jsonObject.put("start", sdf.format(e.getStartDate()));
 				 jsonObject.put("end", sdf.format(e.getEndDate()));

@@ -22,6 +22,17 @@
   width: 60%;
   border-radius:5px;
 }
+.modal-content-text {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+  border-radius:5px;
+}
+#closeText{
+cursor: pointer;
+}
 span.fa.fa-chevron-right::After{
 content:">" ;
 }
@@ -43,7 +54,7 @@ Monthly calander
 		    <label for="startDate">Start Date:</label>
 		    <input type="date" class="form-control" id="startDate" name="startDate" required />
 		  </div>
-		  <div class="form-group col-md-6" id="startDateTimeDiv" >
+		   <div class="form-group col-md-6" id="startDateTimeDiv" >
 		    <label for="endDate">Start Time:</label>
 		    <input type="time" class="form-control" id="startDateTime" name="startDateTime" required="required" />
 		  </div>
@@ -55,7 +66,6 @@ Monthly calander
 		    <label for="endDate">End Time:</label>
 		    <input type="time" class="form-control" id="endDateTime" name="endDateTime" required="required" />
 		  </div>
-		  
 		  <div class="form-group col-md-12">
 		    <label for="eventName">Event Name:</label>
 		    <input type="text" class="form-control" id="eventName" name="eventName" required />
@@ -79,6 +89,24 @@ Monthly calander
   </div>
 
 </div>
+
+<div id="deleteModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content-text">
+    <span id="closeText">&times;</span>
+    <div class="dispText">
+    <div class="py-3">
+    Event Name :<span class="eventNameText"></span>
+    </div>
+    <div class="py-3">
+    When :<span class="whenText"></span>
+    </div>
+    </div>
+    <button type="submit" id="deleteEvent" class="btn btn-primary">Delete</button>
+</div>
+</div>
+
 <%-- <portlet:resourceURL  id="/get/events" var="getEventsUrl" >
 <portlet:param name="mvcPath" value="Blank"/>
 </portlet:resourceURL>  --%>
@@ -87,7 +115,7 @@ Monthly calander
 <portlet:resourceURL  id="/add/event" var="addEventUrl" >
 <portlet:param name="mvcPath" value="Blank"/>
 </portlet:resourceURL>
-
+<portlet:resourceURL  id="/delete/event" var="deleteEventUrl" />
 
 
 <script>
@@ -98,8 +126,7 @@ $( function() {
 	getEvents();
 	
 	function addEvent(startDate,endDate,eventName,eventDescription){
-		console.log(startDate);
-		console.log(endDate);
+		
 		 $.ajax({
 			   type : 'POST',
 	           url : "${addEventUrl}",
@@ -117,9 +144,21 @@ $( function() {
 	           }
 	    }); 
 	}
+	function deleteEvent(id){
+		$.ajax({
+			   type : 'POST',
+	           url : "${deleteEventUrl}",
+	           data : {
+	             ["<portlet:namespace />id"] : id,
+	           },
+	           success : function(resp) {
+	        	   getEvents();
+	           },error: function (error) {
+					console.log("error...", error);	
+	           }
+	    }); 
+	}
 	function getEvents(){
-		
-		console.log("${getEventsUrl}");
 		
 		$.ajax({
 			   type : 'GET',
@@ -156,18 +195,19 @@ $( function() {
 	        });
 	    }); --%>
 	}
-	
+
 	 $('input[type="checkbox"]').click(function(){
-		 if ($('#allDayCheck').is(':checked')) {
-		 $("#startDateTimeDiv").hide();
-   	 	 $("#endDateTimeDiv").hide();
-   	 	 $("#startDateTime").val("");
-  	     $("#endDateTime").val("");
-		 }else{
-			 $("#startDateTimeDiv").show();
-	   	 	 $("#endDateTimeDiv").show();
-		 }
-	 });
+			 if ($('#allDayCheck').is(':checked')) {
+			 $("#startDateTimeDiv").hide();
+	   	 	 $("#endDateTimeDiv").hide();
+	   	 	 $("#startDateTime").val("");
+	  	     $("#endDateTime").val("");
+			 }else{
+				 $("#startDateTimeDiv").show();
+		   	 	 $("#endDateTimeDiv").show();
+			 }
+		 });
+	
 	function renderCalander(eventsList){
 		  var calendarEl = document.getElementById('calendar');
 
@@ -177,8 +217,8 @@ $( function() {
 		    timeZone: 'IST',
 		    themeSystem: 'bootstrap',
 		    headerToolbar: {
-		      left: 'today,prev,next',
-		      center: 'addEventButton',
+		      left: 'prev,today,next addEventButton',
+		      center: 'title',
 		      right: 'dayGridMonth,dayGridWeek,dayGridDay'
 		    },
 		    weekNumbers: true,
@@ -204,7 +244,6 @@ $( function() {
 		        	  var endDateTime = $("#endDateTime").val();
 		        	  startDate = startDate +"T" + startDateTime;
 		        	  endDate = endDate + "T" + endDateTime;
-		        	  console.log(startDate +" "+ endDate);
 		        	  if(startDate != "" && endDate != "")
 		        	  	addEvent(startDate,endDate,eventName,eventDescription);
 		        	  
@@ -214,6 +253,36 @@ $( function() {
 		        }
 		      }
 		    },
+		    eventClick: function(info) {
+		        var eventObj = info.event;
+		        var deleteModal = document.getElementById("deleteModal");
+		        var span = document.getElementById("closeText");
+		        deleteModal.style.display = "block";
+		        $(".eventNameText").html(eventObj.title);
+		        $(".whenText").html(eventObj.start);
+		          span.onclick = function() {
+		        	  deleteModal.style.display = "none";
+		        	}
+		          var deleteEvent = document.getElementById("deleteEvent");
+		          deleteEvent.onclick = function() {
+		        	  console.log(eventObj.id);
+		        	  //deleteEvent(eventObj.id);
+		        	  $.ajax({
+							   type : 'POST',
+					           url : "${deleteEventUrl}",
+					           data : {
+					             ["<portlet:namespace />id"] : eventObj.id,
+					           },
+					           success : function(resp) {
+					        	   getEvents();
+					           },error: function (error) {
+									console.log("error...", error);	
+					           }
+	    				}); 
+		        	  deleteModal.style.display = "none";
+		        	}
+		        
+		      },
 		    eventDidMount: function(info) {
 		    	$(info.el).tooltip({ 
 		          title: info.event.extendedProps.description,

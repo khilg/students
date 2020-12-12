@@ -66,6 +66,13 @@ public class EventsLocalServiceWrapper
 		return _eventsLocalService.createEvents(eventId);
 	}
 
+	@Override
+	public com.docs.assignment.student.model.Events deleteEvent(long id)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _eventsLocalService.deleteEvent(id);
+	}
+
 	/**
 	 * Deletes the events from the database. Also notifies the appropriate model listeners.
 	 *

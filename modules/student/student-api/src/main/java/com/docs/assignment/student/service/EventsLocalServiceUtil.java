@@ -72,6 +72,12 @@ public class EventsLocalServiceUtil {
 		return getService().createEvents(eventId);
 	}
 
+	public static com.docs.assignment.student.model.Events deleteEvent(long id)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteEvent(id);
+	}
+
 	/**
 	 * Deletes the events from the database. Also notifies the appropriate model listeners.
 	 *
